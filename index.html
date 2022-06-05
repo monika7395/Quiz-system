@@ -1,0 +1,141 @@
+<?php include('server.php'); 
+      include_once('connection.php');
+
+      ?>
+
+
+<?php
+if(!isset($_SESSION['username'])){
+    header('location:login.php');
+   }
+   
+?>
+<?php
+$name = $_SESSION['username'];
+$query1 = mysqli_query($conn, "select id from student where name='$name'");
+$row1 = mysqli_fetch_array($query1);
+   $id = $row1['id'];
+$query2 = mysqli_query($conn,"select stud_id from student_exam where name='$name'");
+$row2 = mysqli_fetch_array($query2);
+   $s_id = $row2['stud_id'];
+if($id == $s_id){
+   ?>
+  /* <script>
+   //document.getElementById("start_test").style.visibility = "hidden";
+  // alert("already taken exam");
+      window.location.href="login.html";
+   </script>//
+  
+   
+  <?php  
+}
+?>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<title>Online Test</title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online Test</title>
+     <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--link href="https://fonts.googleapis.com/css/family=plat" rel="stylesheet">
+<link rel="stylesheet" href="login.css"-->
+<style>
+body{
+    background-image:url('img/image.png');
+    background-size:cover;
+}
+ 
+ .test{
+   margin-left:2%;
+} 
+p{
+   color: white;
+   font-size: 20px;
+   }
+ 
+ .test button:hover {
+background: linear-gradient(57deg, #1e4d92, #00c6a7);
+}
+ 
+</style>
+
+
+
+</head>
+<body>
+<div class="container-fluid">
+<?php include_once('header2.php');
+?>
+ </div>
+<div class="container">
+  <div class="test">
+     <br><h1 class="text-center text-info" style="font-weight:bold;margin-top:3%;">Uptricks Screening Process</h1><br>
+       <h2 class="text-center"style="color:white;">Welcome <?php echo $_SESSION['username']; ?></h2><br><br>
+       <div class="mx-auto d-block">
+       <h3 class="text-danger"><u>Instructions:</u></h4>
+       
+       <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Total Number of Questions: 75<br>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Time allocated: 1 Hour.<br>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;each questions carry 1 mark each, no negative marking.<br/>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Test will be start at 3pm.</p>
+       <h3 class="text-danger"><u>Note:</u></h3>
+       <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Login with your given user id and password (send on your register mail ID with us).<br>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Click the 'Submit' button given in the bottom of this page to submit your answers.<br>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Test will be submitted after time is expired once 60 min completed.<br/>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;If you find any technical difficulties then let us know.</p>
+       <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Feel free to reach us at:-<br/>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Mobile No: + 91 7030674732.<br/>
+       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Email Id: info@uptricksservices.com<br/>
+          <a href="home.php"><button type="button" class="btn btn-primary" id="checktimer" style="margin-top:30px;">START TEST</button></a>
+          <p class="text-danger" id=timer style="display: none;">Test will be start at 3pm..</p>
+
+
+  </div>
+  <!--script src="jquery-1.9.1.min.js"></script> <REPLACE NECESSARY JQUERY FILE DEPENDING ON THE VERSION YOU HAVE DOWNLOADED -->
+  <script>
+  var enableDisable = function(){                    
+    var hours = new Date().getHours();      
+    var day = new Date().getDay();  //Use UTC here also
+
+    if (hours >= 15 && hours < 16){
+        document.getElementById('checktimer').disabled = false;
+        document.getElementById('timer').style.display = 'none';
+    }else{
+        document.getElementById('checktimer').disabled = true;
+        document.getElementById('timer').style.display = 'block';
+    }
+};
+
+setInterval(enableDisable, 1000*60);
+enableDisable();
+                
+</script> 
+<script>
+      $(document).ready(function() {
+         function disablePrev() { window.history.forward() }
+         window.onload = disablePrev();
+         window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+      });
+   </script>
+
+</div> 
+</div>
+</body>
+</html>
+
